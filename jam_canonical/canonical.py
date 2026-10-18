@@ -1,0 +1,156 @@
+"""Canonicalization of JAM strings for duplicate detection."""
+
+import numpy as np
+
+
+# ─────────────────────────────────────────────
+# Basic operations
+# ─────────────────────────────────────────────
+
+def rot(a):
+    """Cyclic column rotation: 0→1, 1→2, 2→0."""
+    return np.array(a[:, [1, 2, 0]])
+
+
+def transp(a):
+    """Swap columns 1 and 2."""
+    return np.array(a[:, [0, 2, 1]])
+
+
+def flip(a):
+    """Invert the order of layers."""
+    return np.flipud(a)
+
+
+def sign(a):
+    """
+    Sign change. Reflects each layer about its mid-plane.
+
+    - 2-character tokens: +x ↔ -x (except +0 and *x)
+    - 6-character tokens: (+x-y) ↔ (-x+y) only if x != y
+    """
+    y = np.copy(a)
+    for i in range(y.shape[0]):
+        for j in range(y.shape[1]):
+            s = y[i, j]
+            if len(s) == 2:
+                letter = s[1]
+                sign_char = s[0]
+                if letter != '0' and sign_char != '*':
+                    if sign_char == '+':
+                        y[i, j] = '-' + letter
+                    elif sign_char == '-':
+                        y[i, j] = '+' + letter
+            elif len(s) == 6:
+                sign1, letter1 = s[1], s[2]
+                sign2, letter2 = s[3], s[4]
+                if letter1 != letter2:
+                    if sign1 == '+':
+                        y[i, j] = '(-' + letter1 + '+' + letter2 + ')'
+                    elif sign1 == '-':
+                        y[i, j] = '(+' + letter1 + '-' + letter2 + ')'
+    return y
+
+
+# ─────────────────────────────────────────────
+# Array ↔ chain conversion
+# ─────────────────────────────────────────────
+
+def array_to_chain(a):
+    """Convert an array of tokens to its JAM string representation."""
+    parts = []
+    for col in range(a.shape[1]):
+        parts.append(''.join(a[:, col]))
+    return '/'.join(parts)
+
+
+def chain_to_array(chain):
+    """Convert a JAM string to an array of tokens."""
+    blocks = chain.split('/')
+    columns = []
+    for block in blocks:
+        tokens = []
+        i = 0
+        while i < len(block):
+            if block[i] == '(':
+                tokens.append(block[i:i+6])
+                i += 6
+            else:
+                tokens.append(block[i:i+2])
+                i += 2
+        columns.append(tokens)
+    return np.array(columns).T
+
+
+# ─────────────────────────────────────────────
+# Group construction
+# ─────────────────────────────────────────────
+
+def elements_S3():
+    """Return the 6 elements of S_3 as functions."""
+    return [
+        lambda a: a,
+        lambda a: rot(a),
+        lambda a: rot(rot(a)),
+        lambda a: transp(a),
+        lambda a: rot(transp(a)),
+        lambda a: rot(rot(transp(a))),
+    ]
+
+
+def generate_group(optionx):
+    """
+    Generate the group of operations for the given option.
+
+    Planar options (1, 2): no buckling. The group is S3 × {e, flip},
+    with 12 elements. Sign does not apply.
+
+    Buckled options (3-8): the relevant vertical symmetry is the
+    composition sign·flip (global reflection). The group is
+    S3 × {e, sign·flip}, with 12 elements.
+    """
+    S3 = elements_S3()
+
+    if optionx in [1, 2]:
+        Z2_vertical = [
+            lambda a: a,
+            lambda a: flip(a.copy())
+        ]
+    else:
+        Z2_vertical = [
+            lambda a: a,
+            lambda a: sign(flip(a.copy()))
+        ]
+
+    operations = []
+    for s in S3:
+        for v in Z2_vertical:
+            def op(a, s=s, v=v):
+                return v(s(a))
+            operations.append(op)
+
+    return operations
+
+
+# ─────────────────────────────────────────────
+# Canonical key
+# ─────────────────────────────────────────────
+
+def canonical_key(a, optionx):
+    """Compute the canonical key of a under the group of the given option."""
+    operations = generate_group(optionx)
+    chains = []
+    for op in operations:
+        x = op(a.copy())
+        chains.append(array_to_chain(x))
+    return min(chains)
+
+
+def filter_duplicates(stackinglist, optionx):
+    """Detect duplicates using canonical keys."""
+    dicc = {}
+    for a in stackinglist:
+        key = canonical_key(a, optionx)
+        if key not in dicc:
+            dicc[key] = a
+    return list(dicc.values())

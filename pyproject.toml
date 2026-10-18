@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jam-canonical"
+version = "0.1.0"
+description = "Canonicalization of JAM strings for duplicate detection in layered materials"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [
+    {name = "Edgar R. H. Castillo", email = "edgar.castillo.sci@gmail.com"},
+]
+dependencies = [
+    "numpy",
+]
+
+[project.optional-dependencies]
+tests = [
+    "pytest",
+]
+
+[tool.setuptools.packages.find]
+include = ["jam_canonical*"]
