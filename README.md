@@ -1,4 +1,5 @@
 # jam-canonical
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23471387.svg)](https://doi.org/10.5281/zenodo.23471387)
 
 *[Leer en español](README.es.md)*
 
