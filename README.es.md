@@ -1,5 +1,8 @@
 # jam-canonical
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23471387.svg)](https://doi.org/10.5281/zenodo.23471387)
+![Python](https://img.shields.io/badge/python-3.9%2B-blue)
+![Tests](https://img.shields.io/badge/tests-25%20passing-brightgreen)
+![License](https://img.shields.io/badge/license-MIT-green)
 
 *[Read in English](README.md)*
 
@@ -23,6 +26,14 @@ descrita en:
 El paquete es autocontenido: no requiere `xjam2` en tiempo de ejecución.
 Los tests de validación usan `xjam2` opcionalmente para comparar contra
 el método original.
+
+> **Nota sobre la formalización.** El PDF en `docs/` es la formalización
+> inicial del método. La implementación actual refleja una corrección
+> posterior (confirmada por la Dra. Jessica Arcudia): para opciones
+> buckled, la simetría vertical es la composición `sign·flip`, no `sign`
+> y `flip` de forma independiente. El grupo para todas las opciones
+> tiene orden 12. Ver `jam_canonical/canonical.py` y la sección "El grupo
+> de simetría" arriba para la versión actual.
 
 ## Instalación
 

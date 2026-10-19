@@ -1,5 +1,8 @@
 # jam-canonical
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23471387.svg)](https://doi.org/10.5281/zenodo.23471387)
+![Python](https://img.shields.io/badge/python-3.9%2B-blue)
+![Tests](https://img.shields.io/badge/tests-25%20passing-brightgreen)
+![License](https://img.shields.io/badge/license-MIT-green)
 
 *[Leer en español](README.es.md)*
 
@@ -23,6 +26,14 @@ notation described in:
 The package is self-contained: it does not require `xjam2` at runtime.
 The validation tests optionally use `xjam2` to compare against the
 original pairwise method.
+
+> **Note on the formalization.** The PDF in `docs/` is the initial
+> formalization of the method. The current implementation reflects a
+> later correction (confirmed by Dr. Jessica Arcudia): for buckled
+> options, the vertical symmetry is the composition `sign·flip`, not
+> `sign` and `flip` independently. The group for all options has order
+> 12. See `jam_canonical/canonical.py` and the section "The symmetry
+> group" above for the current version.
 
 ## Installation
 
