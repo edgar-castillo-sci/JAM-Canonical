@@ -2,12 +2,12 @@
 pipeline.py
 
 Generate all canonical classes for n layers of a given JAM option,
-using jam-canonical for filtering at every step.
+using canonJAM for filtering at every step.
 
 This script replicates the generation logic of x.jam, but replaces
-its pairwise filter with filter_duplicates from jam-canonical.
+its pairwise filter with filter_duplicates from canonJAM.
 
-It does not require xjam2. It only requires jam-canonical and numpy.
+It does not require xjam2. It only requires canonJAM and numpy.
 
 Usage:
     python3 pipeline.py --options 1 --levels 2 3 4 5 6
@@ -17,7 +17,7 @@ import argparse
 import numpy as np
 from itertools import permutations
 
-from jam_canonical import filter_duplicates
+from canonjam import filter_duplicates
 
 
 def rows_for_option(option):
@@ -55,7 +55,7 @@ def rows_for_option(option):
 
 def generate_unique(n, option):
     """
-    Generate the canonical classes of n layers using jam-canonical
+    Generate the canonical classes of n layers using canonJAM
     for filtering at every step.
     """
     single = [np.array(r) for r in rows_for_option(option)]
@@ -80,7 +80,7 @@ def parse_args():
     parser = argparse.ArgumentParser(
         description=(
             "Generate canonical classes for JAM options using "
-            "jam-canonical for filtering."
+            "canonJAM for filtering."
         ),
     )
     parser.add_argument(

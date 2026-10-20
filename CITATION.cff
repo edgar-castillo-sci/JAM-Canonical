@@ -5,12 +5,12 @@ authors:
     given-names: Edgar R. H.
     orcid: "https://orcid.org/0009-0006-4268-3323"
     affiliation: "Universidad Juárez Autónoma de Tabasco"
-title: "jam-canonical: Canonicalization of JAM strings for duplicate detection"
+title: "canonJAM: Canonicalization of JAM strings for duplicate detection"
 version: 1.0.0
 doi: 10.5281/zenodo.23471387
 date-released: 2026-10-19
 license: MIT
-repository-code: "https://github.com/edgar-castillo-sci/jam-canonical"
+repository-code: "https://github.com/edgar-castillo-sci/canonJAM"
 keywords:
   - JAM
   - canonicalization

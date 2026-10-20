@@ -1,4 +1,4 @@
-# jam-canonical
+# canonJAM
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23471387.svg)](https://doi.org/10.5281/zenodo.23471387)
 ![Python](https://img.shields.io/badge/python-3.9%2B-blue)
 ![Tests](https://img.shields.io/badge/tests-25%20passing-brightgreen)
@@ -32,7 +32,7 @@ el método original.
 > posterior (confirmada por la Dra. Jessica Arcudia): para opciones
 > buckled, la simetría vertical es la composición `sign·flip`, no `sign`
 > y `flip` de forma independiente. El grupo para todas las opciones
-> tiene orden 12. Ver `jam_canonical/canonical.py` y la sección "El grupo
+> tiene orden 12. Ver `canonjam/canonical.py` y la sección "El grupo
 > de simetría" arriba para la versión actual.
 
 ## Instalación
@@ -50,7 +50,7 @@ pip install -e ".[tests]"
 ## Uso
 
 ```python
-from jam_canonical import canonical_key_std, disc_equivalents_canonical_std
+from canonjam import canonical_key_std, disc_equivalents_canonical_std
 import numpy as np
 
 # Una estructura de 3 capas
@@ -97,7 +97,7 @@ Dra. Jessica Arcudia.
 
 ## Contenido
 
-- `jam_canonical/` — el paquete.
+- `canonjam/` — el paquete.
 - `tests/` — scripts de validación y suite formal de tests.
 - `docs/` — descripción matemática formal (PDF).
 

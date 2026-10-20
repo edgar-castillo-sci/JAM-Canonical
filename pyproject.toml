@@ -3,7 +3,7 @@ requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "jam-canonical"
+name = "canonjam"
 version = "1.0.0"
 description = "Canonicalization of JAM strings for duplicate detection in layered materials"
 readme = "README.md"
@@ -31,9 +31,9 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/edgar-castillo-sci/jam-canonical"
-Documentation = "https://github.com/edgar-castillo-sci/jam-canonical#readme"
-Source = "https://github.com/edgar-castillo-sci/jam-canonical"
+Homepage = "https://github.com/edgar-castillo-sci/canonJAM"
+Documentation = "https://github.com/edgar-castillo-sci/canonJAM#readme"
+Source = "https://github.com/edgar-castillo-sci/canonJAM"
 
 [project.optional-dependencies]
 tests = [
@@ -41,4 +41,4 @@ tests = [
 ]
 
 [tool.setuptools.packages.find]
-include = ["jam_canonical*"]
+include = ["canonjam*"]

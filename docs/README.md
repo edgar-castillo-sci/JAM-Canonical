@@ -22,7 +22,7 @@ Dr. Jessica Arcudia:
 - The canonical key is the same in both formulations (the orbit is smaller,
   but the minimum is the same).
 
-See `jam_canonical/canonical.py` and the main README for the current
+See `canonjam/canonical.py` and the main README for the current
 formulation.
 
 ## Regenerating

@@ -39,7 +39,7 @@ from xjam.libjamtdm import (
     disc_equivalents as disc_old_tdm,
     conv2pseudocanonic as conv_tdm,
 )
-from jam_canonical import (
+from canonjam import (
     canonical_key,
     filter_duplicates,
 )

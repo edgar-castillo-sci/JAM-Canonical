@@ -1,11 +1,11 @@
 # Examples
 
-Two examples showing how to use jam-canonical with and without xjam2.
+Two examples showing how to use canonJAM with and without xjam2.
 
 ## `pipeline.py` — self-contained pipeline
 
 Generates candidates for a JAM option and filters duplicates using
-jam-canonical. Does not require xjam2.
+canonJAM. Does not require xjam2.
 
 ### Usage
 
@@ -28,7 +28,7 @@ Option 1:
 
 Replicates the generation logic of `x.jam` (incremental, level by level),
 but replaces the pairwise filter with `filter_duplicates` from
-jam-canonical.
+canonJAM.
 
 ---
 
@@ -59,7 +59,7 @@ mkdir /tmp/jam-test
 cd /tmp/jam-test
 
 # 2. Copy x_canonical.py and x.jam into it
-cp /path/to/jam-canonical/examples/x_canonical.py .
+cp /path/to/canonJAM/examples/x_canonical.py .
 cp /path/to/xjam2/x.jam .
 
 # 3. Create a test JAM.inp
@@ -92,7 +92,7 @@ generated as usual, but the filtering uses the canonical method.
 ### How it works
 
 Monkey-patches `disc_equivalents` in `xjam.libjamstd` and
-`xjam.libjamtdm` to use `filter_duplicates` from jam-canonical. Then
+`xjam.libjamtdm` to use `filter_duplicates` from canonJAM. Then
 executes `x.jam` as if nothing had changed.
 
 ### Caveats

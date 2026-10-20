@@ -4,7 +4,7 @@ x_canonical.py
 Run x.jam with the canonical method activated.
 
 This script monkey-patches disc_equivalents in xjam2 to use
-filter_duplicates from jam-canonical. It then executes x.jam
+filter_duplicates from canonJAM. It then executes x.jam
 as if nothing had changed.
 
 Requirements:
@@ -23,7 +23,7 @@ import xjam.libjamstd as std
 import xjam.libjamtdm as tdm
 
 # 2. Import the canonical filter
-from jam_canonical import filter_duplicates
+from canonjam import filter_duplicates
 
 
 # 3. Define the replacement

@@ -1,5 +1,5 @@
 """
-Formal test suite for the jam_canonical package.
+Formal test suite for the canonjam package.
 
 These tests are fast, deterministic, and do not measure time.
 They verify the core properties of the canonicalization method:
@@ -19,7 +19,7 @@ Run with:
 import numpy as np
 import pytest
 
-from jam_canonical import (
+from canonjam import (
     canonical_key,
     filter_duplicates,
     array_to_chain,
