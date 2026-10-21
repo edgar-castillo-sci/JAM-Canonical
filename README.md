@@ -11,7 +11,7 @@ represented with the JAM notation.
 
 ## Author
 
-Edgar R. H. Castillo (Universidad Juárez Autónoma de Tabasco)
+Edgar R. H. Castillo (Independent Researcher)
 
 ## Scientific basis
 
