@@ -11,7 +11,7 @@ laminares representadas con la notación JAM.
 
 ## Autor
 
-Edgar R. H. Castillo (Independent Researcher)
+Edgar Castillo (Independent Researcher)
 
 ## Base científica
 
