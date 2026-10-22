@@ -1,4 +1,4 @@
-"""Tests for canonical_key_fast (optimal computation of κ, Theorem 3.17)."""
+"""Tests for canonical_key_fast (optimal computation of κ via column sorting)."""
 
 import itertools
 
@@ -36,8 +36,8 @@ def all_chains(n, option):
 
 
 @pytest.mark.parametrize("option", range(1, 9))
-def test_canonical_key_fast_matches_literal(option):
-    """Theorem 3.17: canonical_key_fast agrees with canonical_key."""
+    def test_canonical_key_fast_matches_literal(option):
+        """canonical_key_fast agrees with canonical_key."""
     for n in [2, 3]:
         for a in all_chains(n, option):
             fast = canonical_key_fast(a, option)

@@ -166,7 +166,7 @@ def sort_cols(a):
 
 
 def canonical_key_fast(a, optionx):
-    """Optimal computation of κ (Theorem 3.17 of Castillo & Arcudia, 2026).
+    """Optimal computation of κ via column sorting.
 
     Computes κ(a) = min(σ(sort_cols(a)), σ(sort_cols(v(a)))), where v is
     the non-trivial element of the Z/2 factor (flip for planar options,

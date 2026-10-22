@@ -2,15 +2,14 @@
 
 This directory contains three kinds of scripts:
 
-1. A **formal test suite** (`test_canonical.py`) that validates the
-   package itself. Does not require `xjam2`.
-2. **Reproducibility scripts** for the manuscript (Castillo & Arcudia,
-   2026). Most are self-contained; `validacion.py` and
+1. A **formal test suite** (`test_canonical.py`, `test_canonical_fast.py`)
+   that validates the package itself. Does not require `xjam2`.
+2. **Reproducibility scripts** for the theoretical results of the
+   package. Most are self-contained; `validacion.py` and
    `reporte_completo.py` optionally use `xjam2` as a baseline.
 3. An **exploration** subdirectory (`exploration/`) with scripts used to
-   construct and verify the BPL/BU G-set isomorphism (Proposition 3.22
-   of the paper) and to explore the classification of G-sets (future
-   work). Not part of the paper's reproducibility suite.
+   construct and verify the BPL/BU G-set isomorphism and to explore the
+   classification of G-sets. Not part of the reproducibility suite.
 
 ## Requirements
 
@@ -36,10 +35,10 @@ Note: installing `xjam2` via `pip` may fail with newer setuptools versions
 ```bash
 cd ..
 pip install -e ".[tests]"
-pytest tests/test_canonical.py -v
+pytest tests/test_canonical.py tests/test_canonical_fast.py -v
 ```
 
-## Reproducibility scripts for the paper
+## Reproducibility scripts
 
 ### `validacion.py`
 
@@ -59,7 +58,7 @@ Options:
 ### `validacion_tabla1.py`
 
 Checks the class counts against Table 1 of [Arcudia2023] for n=2,3,4,5
-on all 8 options. Reproduces the correctness table (Table 2) of the paper.
+on all 8 options.
 
 ```bash
 python3 validacion_tabla1.py
@@ -84,7 +83,6 @@ Options:
 Measures the filtering time of both methods. The original method is O(m²),
 so it is measured only while its estimated time stays below `--max-time`
 (default: 30 s). Above that threshold, only the canonical method is measured.
-Reproduces Table 3 (performance) of the paper.
 
 ```bash
 python3 benchmark.py
@@ -100,10 +98,9 @@ Options:
 
 ### `escalabilidad.py`
 
-Scalability experiment for the planar case up to n=12. Reproduces
-Table 4 of the paper. Self-contained: uses the canonical filter for
-intermediate deduplication, which is what makes generation feasible at
-that scale.
+Scalability experiment for the planar case up to n=12. Self-contained:
+uses the canonical filter for intermediate deduplication, which is what
+makes generation feasible at that scale.
 
 ```bash
 python3 escalabilidad.py
@@ -119,9 +116,9 @@ n=12: m=89,304,  classes=44,530, gen=34.68s, filter=22.77s
 
 ### `recursion_check.py`
 
-Verifies that the closed forms of Theorem 3.20 (derived via Burnside's
-lemma) agree with the recursive formulas of [Arcudia2023] for n=2..30,
-for PL, BPL/BU, and BBU. Self-contained.
+Verifies that the closed forms derived via Burnside's lemma agree with
+the recursive formulas of [Arcudia2023] for n=2..30, for PL, BPL/BU,
+and BBU. Self-contained.
 
 ```bash
 python3 recursion_check.py
@@ -132,8 +129,8 @@ Expected output: `All match for N=2..30 (PL, BPL/BU, BBU)`.
 ### `burnside.py`, `burnside_all.py`
 
 Compute the fixed-point counts \(|Fix(g)|\) for each conjugacy class of
-\(G = S_3 \times \mathbb{Z}/2\). Reproduce Table 1 of the paper.
-`burnside.py` covers PL; `burnside_all.py` covers all 8 options.
+\(G = S_3 \times \mathbb{Z}/2\). `burnside.py` covers PL; `burnside_all.py`
+covers all 8 options.
 
 ```bash
 python3 burnside.py
@@ -142,10 +139,10 @@ python3 burnside_all.py
 
 ### `structural.py`, `structural_all.py`
 
-Verify Theorem 3.16 (orbits and column multisets): \(a \sim b\) iff the
-column multisets of \(a\) and \(b\) coincide, or the column multiset of
-\(a\) equals that of \(v(b)\). `structural.py` covers options 1–4;
-`structural_all.py` covers all 8 options.
+Verify that \(a \sim b\) iff the column multisets of \(a\) and \(b\)
+coincide, or the column multiset of \(a\) equals that of \(v(b)\).
+`structural.py` covers options 1–4; `structural_all.py` covers all 8
+options.
 
 ```bash
 python3 structural.py
@@ -154,9 +151,8 @@ python3 structural_all.py
 
 ### `kappa_equal_kappa_prime.py`
 
-Verifies Theorem 3.17 (optimal computation of \(\kappa\)): the literal
-minimum over the 12 group elements equals the \(O(k)\)-with-constant-2
-computation. Covers all 8 options for n=2,3.
+Verifies that the literal minimum over the 12 group elements equals the
+\(O(k)\)-with-constant-2 computation. Covers all 8 options for n=2,3.
 
 ```bash
 python3 kappa_equal_kappa_prime.py
@@ -166,12 +162,11 @@ Expected output: `kappa == kappa' for all options and n=2,3`.
 
 ## Exploration scripts (`exploration/`)
 
-These scripts were used during the writing of the paper to construct
-and verify the BPL/BU G-set isomorphism (Proposition 3.22) and to
-explore the classification of \(X_n^{\tau}\) as a \(G\)-set (future
-work). They are not part of the paper's reproducibility suite, but are
-kept for the companion work on canonical augmentation and for the
-classification of \(G\)-sets.
+These scripts were used to construct and verify the BPL/BU G-set
+isomorphism and to explore the classification of \(X_n^{\tau}\) as a
+\(G\)-set. They are not part of the reproducibility suite, but are kept
+for future work on canonical augmentation and on the classification of
+\(G\)-sets.
 
 | Script | Purpose |
 |---|---|

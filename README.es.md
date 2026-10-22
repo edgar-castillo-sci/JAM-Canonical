@@ -13,20 +13,6 @@ laminadas representadas con la notación JAM.
 
 Edgar Castillo (Investigador Independiente)
 
-## Artículo asociado
-
-Este paquete es la implementación de referencia del manuscrito:
-
-> Castillo, E., Arcudia, J. "Canonical representation of JAM chains:
-> formalism and a linear-time algorithm." *Manuscrito* (2026).
-
-El artículo formaliza el grupo de simetría de la notación JAM, define un
-representante canónico para cada clase de equivalencia, presenta un
-algoritmo de filtrado O(mk), y deriva formas cerradas para el número de
-configuraciones de n capas no equivalentes mediante el lema de Burnside.
-También demuestra una dicotomía: los conjuntos de cadenas BPL y BU son
-isomorfos como G-conjuntos si y solo si n es par.
-
 ## Base científica
 
 La notación JAM está descrita en:
@@ -71,11 +57,11 @@ a = np.array([['+0', '+j', '+j'],
               ['+0', '+j', '+j'],
               ['+0', '+j', '+j']])
 
-# Cómputo literal (Definición 3.14 del artículo): 12 evaluaciones del grupo
+# Cómputo literal: 12 evaluaciones del grupo
 key = canonical_key(a, optionx=1)
 print(key)
 
-# Cómputo óptimo (Teorema 3.17 del artículo): 2 evaluaciones, O(k)
+# Cómputo óptimo: 2 evaluaciones, O(k)
 key = canonical_key_fast(a, optionx=1)
 print(key)
 
@@ -100,11 +86,11 @@ la misma clave.
 El paquete ofrece dos implementaciones:
 
 - `canonical_key`: la definición literal (mínimo sobre los 12 elementos
-  del grupo). Usada en los benchmarks del artículo para correspondencia
-  directa con la teoría.
-- `canonical_key_fast`: el cómputo óptimo del Teorema 3.17 (mínimo de
-  las concatenaciones de columnas ordenadas de la cadena y de su
-  v-imagen). O(k) con constante 2. Verificado que coincide con
+  del grupo). Usada en los benchmarks para correspondencia directa con
+  la teoría.
+- `canonical_key_fast`: el cómputo óptimo vía ordenamiento de columnas
+  (mínimo de las concatenaciones de columnas ordenadas de la cadena y
+  de su v-imagen). O(k) con constante 2. Verificado que coincide con
   `canonical_key` para las 8 opciones y n=2,3.
 
 ## El grupo de simetría
@@ -126,27 +112,28 @@ Dra. Jessica Arcudia.
 ## Contenido
 
 - `canonjam/` — el paquete.
-- `tests/` — scripts de reproducibilidad para el artículo, la suite
-  de tests formal, y (bajo `tests/exploration/`) scripts de
+- `tests/` — scripts de reproducibilidad para los resultados teóricos,
+  la suite de tests formal, y (bajo `tests/exploration/`) scripts de
   exploración para la dicotomía BPL/BU y la clasificación de
   G-conjuntos.
 - `docs/` — descripción matemática formal (PDF).
 
-## Reproduciendo el artículo
+## Reproduciendo los resultados teóricos
 
-Los scripts en `tests/` reproducen las figuras y tablas del manuscrito.
-Todos son autocontenidos (no requieren `xjam2`) salvo que se indique.
+Los scripts en `tests/` reproducen las verificaciones empíricas
+reportadas en la descripción teórica del paquete. Todos son
+autocontenidos (no requieren `xjam2`) salvo que se indique.
 
 | Script | Reproduce |
 |---|---|
 | `tests/validacion_tabla1.py` | Conteos de clase contra la Tabla 1 de [Arcudia2023] para n=4,5 |
 | `tests/escalabilidad.py` | Experimento de escalabilidad para n=6,8,10,12 (planar) |
 | `tests/recursion_check.py` | Formas cerradas vs. fórmulas recursivas hasta n=30 |
-| `tests/burnside.py`, `tests/burnside_all.py` | Conteos de puntos fijos (Tabla 1 del artículo) |
-| `tests/structural.py`, `tests/structural_all.py` | Verificación del Teorema 3.16 |
-| `tests/kappa_equal_kappa_prime.py` | Verificación del Teorema 3.17 (optimalidad) |
-| `tests/benchmark.py` | Comparación de tiempos de filtrado (Tabla 3) |
-| `tests/validacion.py`, `tests/reporte_completo.py` | Comparación pairwise vs. canónico (Tabla 2) |
+| `tests/burnside.py`, `tests/burnside_all.py` | Conteos de puntos fijos por clase de conjugación |
+| `tests/structural.py`, `tests/structural_all.py` | Órbitas vs. multiconjuntos de columnas |
+| `tests/kappa_equal_kappa_prime.py` | Cómputo literal vs. óptimo de κ |
+| `tests/benchmark.py` | Comparación de tiempos de filtrado |
+| `tests/validacion.py`, `tests/reporte_completo.py` | Comparación pairwise vs. canónico |
 
 Corre cualquiera desde el directorio `tests/`, por ejemplo:
 
