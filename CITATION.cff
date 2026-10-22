@@ -6,9 +6,9 @@ authors:
     orcid: "https://orcid.org/0009-0006-4268-3323"
     affiliation: "Independent Researcher"
 title: "canonJAM: Canonicalization of JAM strings for duplicate detection"
-version: 1.0.1
+version: 1.1.0
 doi: 10.5281/zenodo.23471387
-date-released: 2026-10-19
+date-released: 2026-10-21
 license: MIT
 repository-code: "https://github.com/edgar-castillo-sci/canonJAM"
 keywords:

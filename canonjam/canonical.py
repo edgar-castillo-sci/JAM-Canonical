@@ -154,3 +154,33 @@ def filter_duplicates(stackinglist, optionx):
         if key not in dicc:
             dicc[key] = a
     return list(dicc.values())
+
+# ─────────────────────────────────────────────
+# Optimal computation of κ (Theorem 3.17 of the paper)
+# ─────────────────────────────────────────────
+
+def sort_cols(a):
+    """Return a copy of a with its columns sorted lexicographically."""
+    cols = [tuple(a[:, i]) for i in range(a.shape[1])]
+    return np.array(sorted(cols), dtype=object).T
+
+
+def canonical_key_fast(a, optionx):
+    """Optimal computation of κ (Theorem 3.17 of Castillo & Arcudia, 2026).
+
+    Computes κ(a) = min(σ(sort_cols(a)), σ(sort_cols(v(a)))), where v is
+    the non-trivial element of the Z/2 factor (flip for planar options,
+    sign∘flip for buckled options). This is O(k) with a constant of 2,
+    instead of the 12 group evaluations of `canonical_key`.
+
+    Verified to agree with `canonical_key` for all 8 options and n=2,3;
+    see tests/test_canonical_fast.py.
+    """
+    if optionx in [1, 2]:
+        va = flip(a.copy())
+    else:
+        va = sign(flip(a.copy()))
+    return min(
+        array_to_chain(sort_cols(a)),
+        array_to_chain(sort_cols(va)),
+    )

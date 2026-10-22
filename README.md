@@ -1,7 +1,7 @@
 # canonJAM
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23471387.svg)](https://doi.org/10.5281/zenodo.23471387)
 ![Python](https://img.shields.io/badge/python-3.9%2B-blue)
-![Tests](https://img.shields.io/badge/tests-25%20passing-brightgreen)
+![Tests](https://img.shields.io/badge/tests-33%20passing-brightgreen)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 *[Leer en español](README.es.md)*
@@ -13,10 +13,23 @@ represented with the JAM notation.
 
 Edgar Castillo (Independent Researcher)
 
+## Associated paper
+
+This package is the reference implementation for the manuscript:
+
+> Castillo, E., Arcudia, J. "Canonical representation of JAM chains:
+> formalism and a linear-time algorithm." *Manuscript* (2026).
+
+The paper formalizes the symmetry group of the JAM notation, defines a
+canonical representative for each equivalence class, presents an
+O(mk) filtering algorithm, and derives closed forms for the number of
+inequivalent n-layer configurations via Burnside's lemma. It also
+proves a dichotomy: the BPL and BU chain sets are isomorphic as
+G-sets if and only if n is even.
+
 ## Scientific basis
 
-This package implements a computational method on top of the JAM
-notation described in:
+The JAM notation itself is described in:
 
 > Arcudia, J., Ortiz-Chi, F., Sanchez-Valenzuela, A., Aspuru-Guzik, A.,
 > Merino, G. (2023). "Joining and arrangement of multilayers: A string
@@ -50,7 +63,7 @@ pip install -e ".[tests]"
 ## Usage
 
 ```python
-from canonjam import canonical_key_std, disc_equivalents_canonical_std
+from canonjam import canonical_key, canonical_key_fast, filter_duplicates
 import numpy as np
 
 # A 3-layer structure
@@ -58,12 +71,16 @@ a = np.array([['+0', '+j', '+j'],
               ['+0', '+j', '+j'],
               ['+0', '+j', '+j']])
 
-# Compute its canonical key
-key = canonical_key_std(a, optionx=1)
+# Literal computation (Definition 3.14 of the paper): 12 group evaluations
+key = canonical_key(a, optionx=1)
+print(key)
+
+# Optimal computation (Theorem 3.17 of the paper): 2 evaluations, O(k)
+key = canonical_key_fast(a, optionx=1)
 print(key)
 
 # Filter a list of structures
-unique = disc_equivalents_canonical_std([a, a, a], optionx=1)
+unique = filter_duplicates([a, a, a], optionx=1)
 print(len(unique))
 ```
 
@@ -78,6 +95,16 @@ with a dictionary of canonical keys, which is O(m).
 The canonical key of a structure is the lexicographic minimum of its
 orbit under the symmetry group. Two equivalent structures produce
 the same key.
+
+The package provides two implementations:
+
+- `canonical_key`: the literal definition (minimum over the 12 group
+  elements). Used in the benchmarks of the paper for direct
+  correspondence with the theory.
+- `canonical_key_fast`: the optimal computation of Theorem 3.17
+  (minimum of the sorted-column concatenations of the chain and its
+  v-image). O(k) with a constant of 2. Verified to agree with
+  `canonical_key` for all 8 options and n=2,3.
 
 ## The symmetry group
 
@@ -98,32 +125,41 @@ Arcudia.
 ## Contents
 
 - `canonjam/` — the package.
-- `tests/` — validation scripts and formal test suite.
+- `tests/` — reproducibility scripts for the paper, the formal test
+  suite, and (under `tests/exploration/`) exploratory scripts for the
+  BPL/BU dichotomy and the classification of G-sets.
 - `docs/` — formal mathematical description (PDF).
 
-## Running the validation
+## Reproducing the paper
+
+The scripts in `tests/` reproduce the figures and tables of the
+manuscript. All of them are self-contained (no `xjam2` required) unless
+noted otherwise.
+
+| Script | Reproduces |
+|---|---|
+| `tests/validacion_tabla1.py` | Class counts against Table 1 of [Arcudia2023] for n=4,5 |
+| `tests/escalabilidad.py` | Scalability experiment for n=6,8,10,12 (planar) |
+| `tests/recursion_check.py` | Closed forms vs. recursive formulas up to n=30 |
+| `tests/burnside.py`, `tests/burnside_all.py` | Fixed-point counts (Table 1 of the paper) |
+| `tests/structural.py`, `tests/structural_all.py` | Verification of Theorem 3.16 |
+| `tests/kappa_equal_kappa_prime.py` | Verification of Theorem 3.17 (optimality) |
+| `tests/benchmark.py` | Filtering-time comparison (Table 3) |
+| `tests/validacion.py`, `tests/reporte_completo.py` | Pairwise vs. canonical comparison (Table 2) |
+
+Run any of them from the `tests/` directory, e.g.:
 
 ```bash
-pip install -e ".[tests]"
-
-# Option A: use xjam2 installed via pip
-pip install git+https://github.com/Theochem-merida/xjam2.git
-
-# Option B: use a local copy of xjam2
-export PYTHONPATH=/path/to/xjam2:$PYTHONPATH
-
 cd tests
-python3 validacion.py
+python3 validacion_tabla1.py
+python3 escalabilidad.py
+python3 recursion_check.py
 ```
-
-The validation compares the canonical method against the original
-pairwise method for all 8 JAM options, verifying that both produce
-the same equivalence classes.
 
 ## Running the formal tests
 
 ```bash
-pytest tests/test_canonical.py -v
+pytest tests/test_canonical.py tests/test_canonical_fast.py -v
 ```
 
 ## License

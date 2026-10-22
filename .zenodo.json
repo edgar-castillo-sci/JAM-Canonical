@@ -1,6 +1,6 @@
 {
   "title": "canonJAM: Canonicalization of JAM strings for duplicate detection",
-  "description": "Python library that replaces the pairwise duplicate-detection step of JAM (O(m²)) with a dictionary of canonical keys (O(m)). Implements the symmetry group for all 8 JAM options and validates that the canonical method produces exactly the same equivalence classes as the original algorithm.",
+  "description": "Python library that replaces the pairwise duplicate-detection step of JAM (O(m²)) with a dictionary of canonical keys (O(m)). Implements the symmetry group for all 8 JAM options, provides both the literal computation of the canonical key (Definition 3.14 of Castillo & Arcudia, 2026) and the optimal computation in O(k) with constant 2 (Theorem 3.17), and validates that both produce exactly the same equivalence classes as the original algorithm.",
   "creators": [
     {
       "name": "Castillo, Edgar",
@@ -9,7 +9,7 @@
       "type": "Author"
     }
   ],
-  "version": "1.0.1",
+  "version": "1.1.0",
   "access_right": "open",
   "upload_type": "software",
   "license": "mit",
@@ -21,7 +21,8 @@
     "2D materials",
     "honeycomb",
     "duplicate detection",
-    "algorithmic complexity"
+    "algorithmic complexity",
+    "Burnside lemma"
   ],
   "related_identifiers": [
     {
