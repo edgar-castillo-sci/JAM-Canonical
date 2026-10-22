@@ -156,7 +156,7 @@ def filter_duplicates(stackinglist, optionx):
     return list(dicc.values())
 
 # ─────────────────────────────────────────────
-# Optimal computation of κ (Theorem 3.17 of the paper)
+# Optimal computation of κ
 # ─────────────────────────────────────────────
 
 def sort_cols(a):
